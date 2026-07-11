@@ -4,62 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisador de Processos CIS-PCCTAE | IF Baiano</title>
+    <meta name="description" content="Sistema de análise de conformidade documental e geração de pareceres da Comissão Interna de Supervisão da Carreira PCCTAE do IF Baiano.">
     <link rel="stylesheet" href="style.css">
-    <!-- Fonte Outfit do Google Fonts via HTTPS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Barra de Acessibilidade -->
-    <div class="accessibility-bar" aria-label="Controle de Acessibilidade">
-        <div class="container-acc">
-            <button id="btn-contrast" class="acc-btn" aria-label="Alternar alto contraste" title="Alto Contraste">🌓 Alto Contraste</button>
-            <div class="font-controls">
-                <button id="btn-font-dec" class="acc-btn" aria-label="Diminuir tamanho da fonte" title="Diminuir Fonte">A-</button>
-                <button id="btn-font-normal" class="acc-btn" aria-label="Tamanho de fonte normal" title="Fonte Padrão">A</button>
-                <button id="btn-font-inc" class="acc-btn" aria-label="Aumentar tamanho da fonte" title="Aumentar Fonte">A+</button>
+    <!-- ============================== BARRA DE ACESSIBILIDADE ============================== -->
+    <div class="accessibility-bar" role="toolbar" aria-label="Controles de Acessibilidade">
+        <div class="acc-container">
+            <span class="acc-label">Acessibilidade:</span>
+            <div class="acc-group">
+                <button id="btn-contrast" class="acc-btn" aria-label="Alternar alto contraste" title="Alto Contraste">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg>
+                    <span>Contraste</span>
+                </button>
+                <div class="font-controls">
+                    <button id="btn-font-dec" class="acc-btn" aria-label="Diminuir fonte" title="Diminuir Fonte">A−</button>
+                    <button id="btn-font-normal" class="acc-btn" aria-label="Fonte padrão" title="Fonte Padrão">A</button>
+                    <button id="btn-font-inc" class="acc-btn" aria-label="Aumentar fonte" title="Aumentar Fonte">A+</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Cabeçalho Principal -->
+    <!-- ============================== CABEÇALHO ============================== -->
     <header class="main-header">
         <div class="header-container">
             <div class="logo-area">
                 <img src="marca-if-baiano-horizontal.png" alt="Logotipo do IF Baiano" class="logo-img" id="header-logo">
             </div>
             <div class="title-area">
-                <h1>CIS-PCCTAE</h1>
-                <p class="subtitle">Sistema de Análise de Conformidade e Pareceres</p>
+                <h1 class="gradient-text">CIS-PCCTAE</h1>
+                <p class="subtitle">Análise de Conformidade e Emissão de Pareceres</p>
             </div>
         </div>
     </header>
 
-    <!-- Conteúdo em Layout Dashboard (Duas Colunas) -->
-    <main class="main-content layout-dashboard">
-        <!-- Coluna Esquerda: Fluxo de Trabalho de Análise -->
-        <div class="dashboard-primary">
-            
-            <!-- Seção 1: Dados do Processo -->
-            <section class="section-card shadow-sm" aria-labelledby="form-title">
+    <!-- ============================== STEPPER WIZARD ============================== -->
+    <nav class="stepper-nav" aria-label="Etapas da análise">
+        <div class="stepper-container">
+            <div class="step-item active" data-step="1">
+                <div class="step-circle"><span class="step-number">1</span></div>
+                <span class="step-label">Dados do Processo</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" data-step="2">
+                <div class="step-circle"><span class="step-number">2</span></div>
+                <span class="step-label">Checklist Documental</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" data-step="3">
+                <div class="step-circle"><span class="step-number">3</span></div>
+                <span class="step-label">Documentos Gerados</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================== CONTEÚDO PRINCIPAL ============================== -->
+    <main class="main-content">
+
+        <!-- ========== STEP 1: IDENTIFICAÇÃO DO PROCESSO ========== -->
+        <section class="step-panel active" id="step-1" aria-labelledby="step1-title">
+            <div class="section-card">
                 <div class="card-header">
-                    <h2 id="form-title">📋 Identificação do Processo</h2>
+                    <h2 id="step1-title">Identificação do Processo</h2>
+                    <p class="card-subtitle">Preencha os dados do processo e do(a) servidor(a) solicitante.</p>
                 </div>
                 <div class="card-body">
                     <form id="form-processo" onsubmit="return false;">
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label for="tipo-processo">Modalidade de Solicitação *</label>
-                                <select id="tipo-processo" required aria-label="Selecione o tipo de processo">
+                            <div class="form-group span-2">
+                                <label for="tipo-processo">Modalidade de Solicitação</label>
+                                <select id="tipo-processo" required>
                                     <option value="afastamento" selected>Afastamento Integral (Pós-Graduação Stricto Sensu)</option>
                                     <option value="alocacao">Alocação de Carga Horária (Ações de Desenvolvimento)</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label for="nivel-curso">Nível do Curso *</label>
-                                <select id="nivel-curso" required aria-label="Selecione o nível do curso">
+                                <label for="nivel-curso">Nível do Curso</label>
+                                <select id="nivel-curso" required>
                                     <option value="Mestrado" selected>Mestrado</option>
                                     <option value="Doutorado">Doutorado</option>
                                     <option value="Pós-Doutorado">Pós-Doutorado</option>
@@ -68,202 +94,233 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="numero-processo">Número do Processo (SUAP) *</label>
-                                <input type="text" id="numero-processo" placeholder="23336.XXXXXX.XXXX-XX" required aria-label="Número do processo">
+                                <label for="numero-processo">Nº do Processo (SUAP)</label>
+                                <input type="text" id="numero-processo" placeholder="23336.XXXXXX.XXXX-XX" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="nome-servidor">Nome do(a) Servidor(a) *</label>
-                                <input type="text" id="nome-servidor" placeholder="Nome Completo" required aria-label="Nome do servidor">
+                                <label for="nome-servidor">Nome do(a) Servidor(a)</label>
+                                <input type="text" id="nome-servidor" placeholder="Nome Completo" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="siape-servidor">Número SIAPE *</label>
-                                <input type="text" id="siape-servidor" placeholder="SIAPE" required aria-label="Número SIAPE">
+                                <label for="siape-servidor">SIAPE</label>
+                                <input type="text" id="siape-servidor" placeholder="0000000" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="data-inicio-pretendida">Início Pretendido pelo Servidor *</label>
-                                <input type="date" id="data-inicio-pretendida" required aria-label="Data de início pretendida">
+                                <label for="data-inicio-pretendida">Início Pretendido</label>
+                                <input type="date" id="data-inicio-pretendida" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="data-fim-pretendida">Término Pretendido pelo Servidor *</label>
-                                <input type="date" id="data-fim-pretendida" required aria-label="Data de término pretendida">
+                                <label for="data-fim-pretendida">Término Pretendido</label>
+                                <input type="date" id="data-fim-pretendida" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="data-parecer">Data de Assinatura do Parecer *</label>
-                                <input type="date" id="data-parecer" required aria-label="Data do parecer">
+                                <label for="data-parecer">Data do Parecer</label>
+                                <input type="date" id="data-parecer" required>
                             </div>
                         </div>
                     </form>
                 </div>
-            </section>
+                <div class="card-footer">
+                    <div class="step-nav-buttons">
+                        <span></span>
+                        <button type="button" id="btn-step-1-next" class="btn btn-primary btn-lg">
+                            Avançar para Checklist
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- ========== STEP 2: CHECKLIST DOCUMENTAL ========== -->
+        <section class="step-panel" id="step-2" aria-labelledby="step2-title">
             <!-- Alerta de Retroatividade -->
             <div id="retroatividade-warning" class="warning-alert hidden" role="alert">
-                <span class="warning-icon">⚠️</span>
-                <div class="warning-text">
-                    <strong>Alerta de Retroatividade Detectado:</strong> A data de início solicitada pelo servidor (<span id="warn-data-solicitada"></span>) é anterior à data do Parecer (<span id="warn-data-parecer"></span>). O sistema ajustará de ofício o período de vigência no parecer e na portaria para iniciar a partir da assinatura, conforme vedação de efeitos retroativos e fundamentação jurídica da CIS/IF Baiano.
+                <div class="warning-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div class="warning-content">
+                    <strong>Retroatividade Detectada</strong>
+                    <p>A data de início (<span id="warn-data-solicitada"></span>) é anterior ao parecer (<span id="warn-data-parecer"></span>). O período será ajustado de ofício conforme Art. 37 da CF/88 e Art. 60 da Lei nº 9.784/99.</p>
                 </div>
             </div>
 
-            <!-- Seção 2: Checklist Documental -->
-            <section class="section-card shadow-sm" aria-labelledby="checklist-title">
+            <div class="section-card">
                 <div class="card-header checklist-header-flex">
-                    <h2 id="checklist-title">🔍 Checklist de Documentos e Conformidade</h2>
+                    <div>
+                        <h2 id="step2-title">Checklist de Conformidade</h2>
+                        <p class="card-subtitle">Marque os itens documentais que estão em conformidade no processo.</p>
+                    </div>
                     <div class="checklist-actions">
-                        <button type="button" id="btn-marcar-todos" class="btn btn-secondary btn-sm">Marcar Todos como Conformes</button>
-                        <button type="button" id="btn-desmarcar-todos" class="btn btn-outline btn-sm">Desmarcar Todos</button>
+                        <button type="button" id="btn-marcar-todos" class="btn btn-ghost btn-sm">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                            Marcar Todos
+                        </button>
+                        <button type="button" id="btn-desmarcar-todos" class="btn btn-ghost btn-sm">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                            Limpar Todos
+                        </button>
                     </div>
                 </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0 / 0 conformes</span>
+                </div>
+
                 <div class="card-body">
-                    <div id="checklist-container" class="checklist-list">
+                    <div id="checklist-container">
                         <!-- Gerado dinamicamente via JS -->
                     </div>
                 </div>
-            </section>
-
-            <!-- Ação Geral -->
-            <div class="action-bar-center">
-                <button type="button" id="btn-analisar" class="btn btn-primary btn-lg">⚡ Analisar Conformidade e Gerar Documentos</button>
+                <div class="card-footer">
+                    <div class="step-nav-buttons">
+                        <button type="button" id="btn-step-2-prev" class="btn btn-outline">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                            Voltar
+                        </button>
+                        <button type="button" id="btn-analisar" class="btn btn-primary btn-lg">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Analisar e Gerar Documentos
+                        </button>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <!-- Seção 3: Resultados e Saídas -->
-            <section id="results-section" class="section-card shadow-sm hidden" aria-labelledby="results-title">
+        <!-- ========== STEP 3: RESULTADOS ========== -->
+        <section class="step-panel" id="step-3" aria-labelledby="step3-title">
+            <div class="section-card">
                 <div class="card-header">
-                    <h2 id="results-title">📄 Documentos Gerados</h2>
+                    <h2 id="step3-title">Documentos Gerados</h2>
+                    <p class="card-subtitle">Revise, copie e utilize os textos gerados abaixo.</p>
                 </div>
                 <div class="card-body">
-                    
-                    <!-- Abas dos Resultados -->
+                    <!-- Tabs -->
                     <div class="tabs-control" role="tablist">
-                        <button id="tab-btn-documento" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-documento">
-                            Despacho / Parecer
-                        </button>
-                        <button id="tab-btn-portaria" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-portaria">
-                            Minuta de Portaria
-                        </button>
+                        <button id="tab-btn-documento" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-documento">Despacho / Parecer</button>
+                        <button id="tab-btn-portaria" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-portaria">Minuta de Portaria</button>
                     </div>
 
-                    <!-- Painel 1: Parecer ou Devolutiva -->
-                    <div id="panel-documento" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-documento">
+                    <!-- Painel Despacho/Parecer -->
+                    <div id="panel-documento" class="tab-panel active" role="tabpanel">
                         <div class="result-box-header">
                             <span class="badge" id="document-badge">PARECER / DESPACHO</span>
-                            <button class="btn-copy" id="copy-documento" aria-label="Copiar texto do documento">📋 Copiar Texto</button>
+                            <button class="btn btn-outline btn-sm btn-copy" id="copy-documento" aria-label="Copiar texto do documento">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copiar
+                            </button>
                         </div>
-                        <textarea id="text-documento" class="text-result" readonly aria-label="Texto do parecer ou despacho de devolução"></textarea>
+                        <textarea id="text-documento" class="text-result" readonly aria-label="Texto do parecer ou despacho"></textarea>
                     </div>
 
-                    <!-- Painel 2: Portaria -->
-                    <div id="panel-portaria" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-portaria">
+                    <!-- Painel Portaria -->
+                    <div id="panel-portaria" class="tab-panel" role="tabpanel">
                         <div class="result-box-header">
                             <span class="badge badge-accent">MINUTA DE PORTARIA</span>
-                            <button class="btn-copy" id="copy-portaria" aria-label="Copiar texto da portaria">📋 Copiar Texto</button>
+                            <button class="btn btn-outline btn-sm btn-copy" id="copy-portaria" aria-label="Copiar minuta da portaria">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copiar
+                            </button>
                         </div>
                         <textarea id="text-portaria" class="text-result" readonly aria-label="Texto da minuta da portaria"></textarea>
                     </div>
-
                 </div>
-            </section>
-        </div>
-
-        <!-- Coluna Direita: Biblioteca de Legislação e Normativas -->
-        <aside class="dashboard-secondary">
-            <section class="section-card shadow-sm sticky-card" aria-labelledby="library-title">
-                <div class="card-header">
-                    <h2 id="library-title">📚 Biblioteca de Legislação</h2>
-                </div>
-                <div class="card-body library-body">
-                    <p class="library-intro">Consulte abaixo as normas e leis federais que fundamentam as análises da comissão:</p>
-                    
-                    <div class="library-group">
-                        <h3>Normas do IF Baiano (Acesso Local)</h3>
-                        <ul class="library-list">
-                            <li>
-                                <a href="docs/Resolucao_Consup_63_2020.pdf" target="_blank" class="library-link" aria-label="Abrir Resolução Consup 63/2020 PDF">
-                                    <span class="link-icon">📄</span>
-                                    <div class="link-text">
-                                        <strong>Resolução CONSUP 63/2020</strong>
-                                        <span>Regulamento Geral de Afastamentos Stricto Sensu</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="docs/Instrucao-Normativa-34-2020_Consolidada.pdf" target="_blank" class="library-link" aria-label="Abrir Instrução Normativa 34/2020 PDF">
-                                    <span class="link-icon">📄</span>
-                                    <div class="link-text">
-                                        <strong>Instrução Normativa 34/2020</strong>
-                                        <span>Regulamento de Alocação de Carga Horária Semanal</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="library-group">
-                        <h3>Legislação Federal (Links Externos)</h3>
-                        <ul class="library-list">
-                            <li>
-                                <a href="https://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm" target="_blank" rel="noopener" class="library-link link-external" aria-label="Abrir Lei 8.112/1990 no site do Planalto">
-                                    <span class="link-icon">⚖️</span>
-                                    <div class="link-text">
-                                        <strong>Lei nº 8.112/1990</strong>
-                                        <span>Regime Jurídico Único dos Servidores Civis da União</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.planalto.gov.br/ccivil_03/leis/l9784.htm" target="_blank" rel="noopener" class="library-link link-external" aria-label="Abrir Lei 9.784/1999 no site do Planalto">
-                                    <span class="link-icon">⚖️</span>
-                                    <div class="link-text">
-                                        <strong>Lei nº 9.784/1999</strong>
-                                        <span>Lei do Processo Administrativo Federal (Eficácia)</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9991.htm" target="_blank" rel="noopener" class="library-link link-external" aria-label="Abrir Decreto 9.991/2019 no site do Planalto">
-                                    <span class="link-icon">⚖️</span>
-                                    <div class="link-text">
-                                        <strong>Decreto nº 9.991/2019</strong>
-                                        <span>Política Nacional de Desenvolvimento de Pessoas (PNDP)</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2005-2007/2005/lei/l11091.htm" target="_blank" rel="noopener" class="library-link link-external" aria-label="Abrir Lei 11.091/2005 no site do Planalto">
-                                    <span class="link-icon">⚖️</span>
-                                    <div class="link-text">
-                                        <strong>Lei nº 11.091/2005</strong>
-                                        <span>Plano de Carreira dos TAEs (PCCTAE)</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
+                <div class="card-footer">
+                    <div class="step-nav-buttons">
+                        <button type="button" id="btn-step-3-prev" class="btn btn-outline">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                            Voltar ao Checklist
+                        </button>
+                        <button type="button" id="btn-nova-analise" class="btn btn-secondary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            Nova Análise
+                        </button>
                     </div>
                 </div>
-            </section>
-        </aside>
+            </div>
+        </section>
     </main>
 
-    <!-- Rodapé -->
+    <!-- ============================== FAB - BIBLIOTECA DE LEGISLAÇÃO ============================== -->
+    <button class="fab-library" id="fab-library" aria-label="Abrir Biblioteca de Legislação" title="Legislação">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    </button>
+
+    <!-- Sidebar de Legislação -->
+    <div class="sidebar-overlay hidden" id="sidebar-overlay"></div>
+    <aside class="sidebar-library" id="sidebar-library" aria-label="Biblioteca de Legislação">
+        <div class="sidebar-header">
+            <h2>Biblioteca de Legislação</h2>
+            <button class="btn btn-icon" id="btn-close-sidebar" aria-label="Fechar biblioteca">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <div class="library-group">
+                <h3>Normas do IF Baiano</h3>
+                <ul class="library-list">
+                    <li><a href="docs/Resolucao_Consup_63_2020.pdf" target="_blank" class="library-link">
+                        <span class="link-icon">📄</span>
+                        <div class="link-text"><strong>Resolução CONSUP 63/2020</strong><span>Regulamento Geral de Afastamentos Stricto Sensu</span></div>
+                    </a></li>
+                    <li><a href="docs/Instrucao-Normativa-34-2020_Consolidada.pdf" target="_blank" class="library-link">
+                        <span class="link-icon">📄</span>
+                        <div class="link-text"><strong>IN 34/2020</strong><span>Alocação de Carga Horária Semanal</span></div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="library-group">
+                <h3>Legislação Federal</h3>
+                <ul class="library-list">
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l8112cons.htm" target="_blank" rel="noopener" class="library-link link-external">
+                        <span class="link-icon">⚖️</span>
+                        <div class="link-text"><strong>Lei nº 8.112/1990</strong><span>Regime Jurídico Único dos Servidores</span></div>
+                    </a></li>
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/leis/l9784.htm" target="_blank" rel="noopener" class="library-link link-external">
+                        <span class="link-icon">⚖️</span>
+                        <div class="link-text"><strong>Lei nº 9.784/1999</strong><span>Processo Administrativo Federal</span></div>
+                    </a></li>
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9991.htm" target="_blank" rel="noopener" class="library-link link-external">
+                        <span class="link-icon">⚖️</span>
+                        <div class="link-text"><strong>Decreto nº 9.991/2019</strong><span>PNDP - Desenvolvimento de Pessoas</span></div>
+                    </a></li>
+                    <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2005-2007/2005/lei/l11091.htm" target="_blank" rel="noopener" class="library-link link-external">
+                        <span class="link-icon">⚖️</span>
+                        <div class="link-text"><strong>Lei nº 11.091/2005</strong><span>Plano de Carreira PCCTAE</span></div>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ============================== RODAPÉ ============================== -->
     <footer class="main-footer">
-        <p>© 2026 CIS-PCCTAE - Instituto Federal de Educação, Ciência e Tecnologia Baiano</p>
-        <p class="footer-note">Ambiente estritamente local. Os dados preenchidos são processados em memória e não são transmitidos ou armazenados em bancos de dados.</p>
+        <p>© 2026 CIS-PCCTAE — Instituto Federal de Educação, Ciência e Tecnologia Baiano</p>
+        <p class="footer-note">Ambiente local. Os dados são processados em memória e não são armazenados ou transmitidos.</p>
     </footer>
 
-    <!-- Banner de Privacidade/Cookies (LGPD) -->
+    <!-- ============================== COOKIE BANNER (LGPD) ============================== -->
     <div id="cookie-banner" class="cookie-banner" role="dialog" aria-labelledby="cookie-title">
         <div class="cookie-container">
             <div class="cookie-text">
-                <strong id="cookie-title">🛡️ Privacidade e Segurança de Dados</strong>
-                <p>Esta ferramenta opera em caráter exclusivamente local. Os dados informados sobre processos e servidores são processados em tempo de execução no seu navegador (somente leitura para geração de texto) e **não são armazenados ou enviados** para servidores externos. Este site utiliza cookies técnicos locais apenas para guardar preferências do usuário (como o tema de contraste).</p>
+                <strong id="cookie-title">Privacidade e LGPD</strong>
+                <p>Esta ferramenta processa dados exclusivamente em memória no seu navegador. Nenhuma informação é armazenada ou enviada a servidores externos. Cookies técnicos locais armazenam apenas suas preferências visuais.</p>
             </div>
-            <button id="btn-accept-cookie" class="btn btn-primary btn-sm">Estou ciente e concordo</button>
+            <button id="btn-accept-cookie" class="btn btn-primary btn-sm">Estou ciente</button>
         </div>
     </div>
+
+    <!-- ============================== TOAST NOTIFICATION ============================== -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="app.js"></script>
 </body>

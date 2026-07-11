@@ -22,8 +22,10 @@ A aplicação foi projetada para atuar em conformidade estrita com a LGPD. Todos
 
 ## 📜 Log de Atualizações (Changelog)
 
-### 📅 11/07/2026 - Implantação e Organização no Repositório do GitHub
-- 📂 **Migração de Código**: Movi e estruturei a aplicação na pasta central de repositórios do GitHub (`IF Baiano APPs/analisador-cis-pcctae`) para publicação e versionamento corretos.
-- 📚 **Biblioteca Digital**: Criei a pasta `docs/` contendo as normativas locais em formato PDF.
-- 🎨 **Layout Dashboard**: Redesenhei a interface para apresentar um layout em duas colunas, com a biblioteca de leis e normas fixada na barra lateral.
-- ♿ **Acessibilidade & UI**: Inseri controles de acessibilidade (Alto Contraste e Zoom de Fonte) e padronizei o layout sob a paleta oficial do IF Baiano (Verde `#3E9A2D` e Vermelho `#C80710`).
+### 📅 11/07/2026 - Redesign UI/UX Premium & Implantação no GitHub
+- 📂 **Migração de Código**: Movi e estruturei a aplicação na pasta central de repositórios do GitHub (`IF Baiano APPs/analisador-cis-pcctae`) para versionamento.
+- 📚 **Biblioteca Digital & Sidebar**: Criei a pasta `docs/` com PDFs de normativas locais e implementei uma gaveta/sidebar flutuante interativa com um botão FAB para acesso à legislação.
+- 🎛️ **Fluxo Stepper Wizard**: Dividi o formulário e checklist em um fluxo guiado passo a passo de 3 etapas com indicador visual de progresso (`stepper-nav`).
+- 📊 **Checklist de Conformidade**: Adicionei barra de progresso dinâmica em tempo real para o preenchimento de documentos e redesenhei os checkboxes com marcadores SVG personalizados.
+- ♿ **Acessibilidade & UI**: Inseri controles de acessibilidade (Alto Contraste e Zoom de Fonte), suporte total a teclado e padronizei a paleta oficial do IF Baiano (Verde `#3E9A2D` e Vermelho `#C80710`).
+- 🔔 **Toast Notifications**: Adicionei um sistema de toasts na base da tela para dar feedback ao copiar documentos ou ao reiniciar o formulário.
