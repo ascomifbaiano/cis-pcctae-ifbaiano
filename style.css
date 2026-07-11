@@ -204,57 +204,86 @@ ul, ol { list-style: none; }
   left: 0;
   right: 0;
   z-index: 1100;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-6);
   background: var(--bg-dark);
   color: var(--text-inverse);
   font-size: 0.75rem;
-  height: 34px;
+  height: 38px;
+  border-bottom: 1.5px solid var(--green-600);
 }
 
-.accessibility-bar span {
-  margin-right: auto;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  opacity: 0.85;
+.acc-container {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-4);
+  height: 100%;
 }
 
-.accessibility-bar button {
+.acc-label {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.acc-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.acc-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.08);
-  color: var(--text-inverse);
-  border: 1px solid rgba(255,255,255,0.12);
+  gap: 6px;
+  background: #FFFFFF !important;
+  color: var(--text-dark) !important;
+  border: 1.5px solid var(--border) !important;
   border-radius: var(--radius-sm);
   padding: 2px 10px;
-  font-family: inherit;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
   cursor: pointer;
-  height: 24px;
-  min-width: 24px;
-  transition: background var(--duration) var(--ease),
-              box-shadow var(--duration) var(--ease),
-              border-color var(--duration) var(--ease);
+  height: 26px;
+  transition: all var(--duration) var(--ease);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-.accessibility-bar button:hover {
-  background: rgba(255,255,255,0.16);
-  box-shadow: 0 0 8px rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.25);
+.acc-btn svg {
+  stroke: var(--text-dark) !important;
 }
 
-.accessibility-bar button:active {
-  transform: scale(0.95);
+.acc-btn:hover {
+  background: var(--green-50) !important;
+  border-color: var(--green-500) !important;
+  color: var(--green-700) !important;
+  box-shadow: 0 2px 4px rgba(62,154,45,0.15);
+}
+
+.acc-btn:hover svg {
+  stroke: var(--green-700) !important;
+}
+
+.acc-btn:active {
+  transform: scale(0.96);
 }
 
 /* Push page content below fixed bars */
 body {
-  padding-top: 34px;
+  padding-top: 38px;
 }
 
 /* ----- 4. MAIN HEADER ------------------------------------- */
@@ -1549,12 +1578,12 @@ body.high-contrast .progress-bar-fill::after {
     font-size: calc(14px * var(--font-scale));
   }
 
-  .accessibility-bar {
-    padding: var(--space-1) var(--space-3);
-    gap: var(--space-1);
+  .acc-container {
+    padding: 0 var(--space-3);
+    gap: var(--space-2);
   }
 
-  .accessibility-bar span {
+  .acc-label {
     display: none;
   }
 

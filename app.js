@@ -345,9 +345,18 @@ function processarConformidade() {
     const numProcesso = document.getElementById("numero-processo").value;
     const nomeServidor = document.getElementById("nome-servidor").value;
     const siape = document.getElementById("siape-servidor").value;
+    const campusLotacao = document.getElementById("campus-lotacao").value;
+    const setorLotacao = document.getElementById("setor-lotacao").value;
+    const cargoServidor = document.getElementById("cargo-servidor").value;
     const dataInicioPretendida = document.getElementById("data-inicio-pretendida").value;
     const dataFimPretendida = document.getElementById("data-fim-pretendida").value;
     const dataParecer = document.getElementById("data-parecer").value;
+
+    // Validar se os novos campos estão preenchidos antes de processar
+    if (!campusLotacao || !setorLotacao || !cargoServidor) {
+        showToast("Por favor, preencha a Lotação, o Setor e o Cargo do servidor.");
+        return;
+    }
 
     // Coleta pendências
     const itensDesmarcados = [];
@@ -373,9 +382,11 @@ function processarConformidade() {
         let d = `DESPACHO DE DILIGÊNCIA - CIS/PCCTAE/IFBAIANO\n`;
         d += `Processo nº: ${numProcesso}\n`;
         d += `Interessado(a): ${nomeServidor}\n`;
+        d += `Cargo/Lotação: ${cargoServidor} - ${setorLotacao} / ${campusLotacao}\n`;
         d += `SIAPE: ${siape}\n`;
         d += `Assunto: Análise documental de processo para ${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} (${nivelCurso})\n\n`;
-        d += `Ao(À) Núcleo de Apoio à Gestão de Pessoas (NAGP),\n\n`;
+        d += `Ao(À) ${setorLotacao}\n`;
+        d += `${campusLotacao} - IF Baiano\n\n`;
         d += `Prezados(as) Colegas,\n\n`;
         d += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano realizou a análise da documentação acostada ao processo em epígrafe. Em atenção às diretrizes da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, constatou-se a necessidade de saneamento do feito devido à ausência ou inconformidade dos seguintes itens:\n\n`;
 
@@ -411,11 +422,12 @@ function processarConformidade() {
         let p = `Parecer nº _____/${new Date(dataParecer + "T00:00:00").getFullYear()} - OA-CISPCTAE/RET/IFBAIANO\n`;
         p += `Processo nº: ${numProcesso}\n`;
         p += `Interessado(a): ${nomeServidor}\n`;
+        p += `Cargo/Lotação: ${cargoServidor} - ${setorLotacao} / ${campusLotacao}\n`;
         p += `SIAPE: ${siape}\n`;
         p += `Assunto: Solicitação de ${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} para cursar ${nivelCurso}\n\n`;
         p += `A Comissão Interna de Supervisão da Carreira – CIS/PCCTAE do IF Baiano, designada pela PORTARIA 124/2026 - RET-GAB/RET/IFBAIANO, de 15 de abril de 2026, e suas alterações, ao analisar os documentos presentes no Processo nº ${numProcesso}, considerando as disposições da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, que tratam sobre as ações de desenvolvimento em serviço e afastamentos de servidores da carreira PCCTAE, manifesta-se favoravelmente pelo deferimento do pleito.\n\n`;
         p += `O período deferido corresponde a ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}${retroTexto}.\n\n`;
-        p += `À vista do exposto, encaminha-se o processo ao Núcleo de Apoio à Gestão de Pessoas (NAGP) para providências de elaboração da portaria autorizativa e posterior encaminhamento ao Gabinete da Reitora para homologação e publicação.\n\n`;
+        p += `À vista do exposto, encaminha-se o processo ao Gabinete da Reitora do IF Baiano para homologação, emissão da respectiva portaria autorizativa e demais providências cabíveis.\n\n`;
         p += `[Cidade - BA], ${formatarDataPorExtenso(dataParecer)}.\n\n`;
         p += `(Assinado eletronicamente)\n\n`;
         p += `Membros da CIS/PCCTAE\nIF Baiano`;
@@ -424,17 +436,17 @@ function processarConformidade() {
 
         // PORTARIA
         let port = `MINUTA DE PORTARIA Nº ______ / ${new Date(dataParecer + "T00:00:00").getFullYear()} - RET-GAB/RET/IFBAIANO, DE ${formatarDataDiaMes(dataParecer)} DE ${new Date(dataParecer + "T00:00:00").getFullYear()}\n\n`;
-        port += `O REITOR DO INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO, no uso de suas atribuições delegadas pelo Decreto de 25/04/2018, publicado no Diário Oficial da União de 26/04/2018, e nos termos da Lei nº 11.892/2008, da Lei nº 8.112/1990, e considerando o constante no Processo nº ${numProcesso} e no Parecer da CIS/PCCTAE,\n\n`;
+        port += `A REITORA DO INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO, no uso das suas atribuições delegadas pelo Decreto de 20/05/2026, publicado no DOU de 21/05/2026, Seção 2, página 1, e de acordo com as disposições contidas na Lei nº 8.112, de 11/12/1990 e na Lei nº 11.892, de 29/12/2008, e considerando o constante no Processo nº ${numProcesso} e no Parecer da CIS/PCCTAE,\n\n`;
         port += `RESOLVE:\n\n`;
 
         if (tipoProcesso === 'afastamento') {
-            port += `Art. 1º Conceder afastamento integral ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de Técnico-Administrativo em Educação, matrícula SIAPE nº ${siape}, lotado(a) no Instituto Federal de Educação, Ciência e Tecnologia Baiano, para participar de Programa de Pós-Graduação Stricto Sensu em nível de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
+            port += `Art. 1º Conceder afastamento integral ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de ${cargoServidor}, matrícula SIAPE nº ${siape}, lotado(a) no(a) ${campusLotacao} do Instituto Federal de Educação, Ciência e Tecnologia Baiano, para participar de Programa de Pós-Graduação Stricto Sensu em nível de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
         } else {
-            port += `Art. 1º Autorizar a alocação de carga horária semanal para fins de participação em ação de desenvolvimento em serviço ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de Técnico-Administrativo em Educação, matrícula SIAPE nº ${siape}, lotado(a) no Instituto Federal de Educação, Ciência e Tecnologia Baiano, para frequentar curso de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
+            port += `Art. 1º Autorizar a alocação de carga horária semanal para fins de participação em ação de desenvolvimento em serviço ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de ${cargoServidor}, matrícula SIAPE nº ${siape}, lotado(a) no(a) ${campusLotacao} do Instituto Federal de Educação, Ciência e Tecnologia Baiano, para frequentar curso de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
         }
 
         port += `Art. 2º Esta Portaria entra em vigor na data de sua publicação.\n\n\n`;
-        port += `AÉCIO JOSÉ ARAÚJO PASSOS DUARTE\nReitor`;
+        port += `OZENICE SILVA DOS SANTOS\nReitora`;
 
         txtPortaria.value = port;
 

@@ -22,10 +22,14 @@ A aplicação foi projetada para atuar em conformidade estrita com a LGPD. Todos
 
 ## 📜 Log de Atualizações (Changelog)
 
-### 📅 11/07/2026 - Redesign UI/UX Premium & Implantação no GitHub
+### 📅 11/07/2026 - Redesign UI/UX Premium & Atualização de Fluxo (Reitora Ozenice)
 - 📂 **Migração de Código**: Movi e estruturei a aplicação na pasta central de repositórios do GitHub (`IF Baiano APPs/analisador-cis-pcctae`) para versionamento.
 - 📚 **Biblioteca Digital & Sidebar**: Criei a pasta `docs/` com PDFs de normativas locais e implementei uma gaveta/sidebar flutuante interativa com um botão FAB para acesso à legislação.
 - 🎛️ **Fluxo Stepper Wizard**: Dividi o formulário e checklist em um fluxo guiado passo a passo de 3 etapas com indicador visual de progresso (`stepper-nav`).
 - 📊 **Checklist de Conformidade**: Adicionei barra de progresso dinâmica em tempo real para o preenchimento de documentos e redesenhei os checkboxes com marcadores SVG personalizados.
 - ♿ **Acessibilidade & UI**: Inseri controles de acessibilidade (Alto Contraste e Zoom de Fonte), suporte total a teclado e padronizei a paleta oficial do IF Baiano (Verde `#3E9A2D` e Vermelho `#C80710`).
 - 🔔 **Toast Notifications**: Adicionei um sistema de toasts na base da tela para dar feedback ao copiar documentos ou ao reiniciar o formulário.
+- 🏫 **Dados Dinâmicos de Lotação**: Inclusão de campos no formulário para Campus de Lotação (com seleção de todas as unidades tradicionais da instituição, Reitoria e os 4 novos campi de Remanso, Ribeira do Pombal, Ruy Barbosa e Santo Estêvão), Setor e Cargo do servidor.
+- ⚖️ **Correção do Fluxo Administrativo**: Ajuste no despacho de diligência para devolver o processo diretamente ao setor de lotação do servidor, e alteração do encaminhamento do parecer de deferimento para o Gabinete da Reitora (em vez de NAGP).
+- 👑 **Atualização da Reitoria**: Alterada a assinatura e o preâmbulo das minutas de portaria para a atual reitora do IF Baiano, Ozenice Silva dos Santos, utilizando os dados oficiais fornecidos (Decreto de 20/05/2026, publicado no DOU de 21/05/2026, Seção 2, pág. 1), com a respectiva flexão de gênero gramatical.
+- ♿ **Ajuste na Barra de Acessibilidade**: Reposicionamento dos controles de acessibilidade (Alto Contraste, A- e A+) para o lado esquerdo da tela e redesign dos botões para um formato sólido de alto contraste (fundo branco com letras escuras), resolvendo os problemas de legibilidade e visualização.
