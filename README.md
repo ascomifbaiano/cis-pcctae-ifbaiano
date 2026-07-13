@@ -22,6 +22,14 @@ A aplicação foi projetada para atuar em conformidade estrita com a LGPD. Todos
 
 ## 📜 Log de Atualizações (Changelog)
 
+### 📅 13/07/2026 - Checklist de Conformidade Integrado e Revisão de Normativas
+- 📋 **Checklist Concluído na Ata**: Adicionada a nova aba "Checklist Concluído" no passo final quando não há pendências documentais (Deferimento). Esta aba gera o checklist estruturado em conformidade com o preenchimento, ideal para impressão direta ou exportação em PDF para instrução do processo eletrônico no SUAP.
+- ⚙️ **Simplificação do Checklist de Alocação**: 
+  - Removidos os tópicos redundantes de anuência das chefias imediata e geral, visto que tais manifestações já se encontram embutidas na assinatura eletrônica do próprio formulário anexo.
+  - Criado o tópico unificado "Demonstração de incompatibilidade de horários" (grade de horário oficial, declaração do orientador/responsável e/ou mapa de deslocamento) para maior flexibilidade na triagem documental.
+- 📂 **Ajuste no Checklist de Afastamento**: Correção na redação do item do PDP para "Tema/ação de desenvolvimento previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano", eliminando ambiguidade técnica.
+- 🖨️ **Polimento de Impressão CSS**: Atualizado o bloco `@media print` no `style.css` para ocultar controles do sistema (abas `.tabs-control` e cabeçalhos `.result-box-header`) na impressão das minutas, pareceres e checklists.
+
 ### 📅 11/07/2026 - Redesign UI/UX Premium & Atualização de Fluxo (Reitora Ozenice)
 - 📂 **Migração de Código**: Movi e estruturei a aplicação na pasta central de repositórios do GitHub (`IF Baiano APPs/analisador-cis-pcctae`) para versionamento.
 - 📚 **Biblioteca Digital & Sidebar**: Criei a pasta `docs/` com PDFs de normativas locais e implementei uma gaveta/sidebar flutuante interativa com um botão FAB para acesso à legislação.

@@ -34,8 +34,6 @@ const CHECKLISTS = {
             {
                 titulo: "Relatórios e Anuências do Setor",
                 itens: [
-                    { id: "al_3_1", texto: "Anuência da chefia imediata registrada eletronicamente via SUAP." },
-                    { id: "al_3_2", texto: "Anuência da Direção-Geral (Campi) ou Pró-Reitor/Diretor Sistêmico (Reitoria) no SUAP." },
                     { id: "al_3_3", texto: "Documento de Planejamento do Setor para o Atendimento das Demandas Institucionais anexado." }
                 ]
             },
@@ -43,8 +41,7 @@ const CHECKLISTS = {
                 titulo: "Manifestação da DGP/NUCAP e Documentos Acadêmicos",
                 itens: [
                     { id: "al_4_1", texto: "Manifestação favorável do NUCAP/DGP sobre o alinhamento ao PDP." },
-                    { id: "al_4_2", texto: "Grade de horários oficial das disciplinas anexada ao processo." },
-                    { id: "al_4_3", texto: "Declaração assinada pelo orientador atestando carga horária, curso e instituição." },
+                    { id: "al_4_2", texto: "Demonstração de incompatibilidade de horários (através de grade de horários oficial, declaração assinada pelo orientador/responsável da instituição e/ou mapa de deslocamento)." },
                     { id: "al_4_4", texto: "Comprovante de reconhecimento do curso pelo MEC/CAPES (Plataforma Sucupira/Carolina Bori)." }
                 ]
             },
@@ -73,7 +70,7 @@ const CHECKLISTS = {
                     { id: "af_1_2", texto: "Servidor não possui jornada com carga horária reduzida, ou solicitou retorno ao tempo integral." },
                     { id: "af_1_3", texto: "Não responde a Processo Administrativo Disciplinar (PAD)." },
                     { id: "af_1_4", texto: "Período solicitado respeita o limite (Mestrado: até 24m / Doutorado: até 48m / Pós-Doc: até 12m)." },
-                    { id: "af_1_5", texto: "O afastamento está previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano." },
+                    { id: "af_1_5", texto: "Tema/ação de desenvolvimento previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano." },
                     { id: "af_1_6", texto: "O curso possui alinhamento direto com a área de atribuição do cargo efetivo do servidor." },
                     { id: "af_1_7", texto: "Não possui curso concluído no mesmo nível de titulação pretendido." },
                     { id: "af_1_8", texto: "Assinaturas do solicitante, chefia imediata e Direção Geral/Diretor Sistêmico no formulário." }
@@ -403,6 +400,10 @@ function processarConformidade() {
         tabPortariaBtn.style.opacity = "0.5";
         tabPortariaBtn.style.pointerEvents = "none";
 
+        // Ocultar aba do checklist concluído
+        const tabChecklist = document.getElementById("tab-btn-checklist");
+        if (tabChecklist) tabChecklist.style.display = "none";
+
         showToast(`Gerado Despacho de Diligência com ${itensDesmarcados.length} pendência(s).`);
 
     } else {
@@ -450,7 +451,75 @@ function processarConformidade() {
 
         txtPortaria.value = port;
 
-        showToast("Parecer de Deferimento e Minuta de Portaria gerados com sucesso!");
+        // Exibir a aba do checklist concluído
+        const tabChecklist = document.getElementById("tab-btn-checklist");
+        if (tabChecklist) tabChecklist.style.display = "inline-flex";
+
+        // Gerar o HTML do Checklist Concluído para impressão
+        const checklist = CHECKLISTS[tipoProcesso];
+        let checklistHtml = `
+            <div class="print-checklist-document">
+                <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #3E9A2D; padding-bottom: 10px;">
+                    <img src="marca-if-baiano-horizontal.png" alt="IF Baiano" style="max-height: 60px; margin-bottom: 10px;" onerror="this.style.display='none';">
+                    <h3 style="color: #3E9A2D; margin: 0; font-size: 1.4rem; font-weight: 700;">Checklist de Conformidade Documental</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #555;">Comissão Interna de Supervisão da Carreira - CIS/PCCTAE</p>
+                </div>
+                
+                <div style="margin-bottom: 25px; background-color: var(--bg-page); padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 4px 0; font-weight: bold; width: 150px;">Processo nº:</td><td style="padding: 4px 0;">${numProcesso}</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">Interessado(a):</td><td style="padding: 4px 0;">${nomeServidor}</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">Cargo/Lotação:</td><td style="padding: 4px 0;">${cargoServidor} - ${setorLotacao} / ${campusLotacao}</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">SIAPE:</td><td style="padding: 4px 0;">${siape}</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">Assunto:</td><td style="padding: 4px 0;">${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} (${nivelCurso})</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">Data da Análise:</td><td style="padding: 4px 0;">${formatarData(dataParecer)}</td></tr>
+                    </table>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+        `;
+
+        checklist.secoes.forEach(secao => {
+            checklistHtml += `
+                <div style="border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; break-inside: avoid;">
+                    <div style="background-color: #3E9A2D; color: white; padding: 8px 12px; font-weight: bold; font-size: 0.95rem;">
+                        ${secao.titulo}
+                    </div>
+                    <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px; background-color: var(--bg-card);">
+            `;
+            secao.itens.forEach(item => {
+                checklistHtml += `
+                    <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; line-height: 1.4;">
+                        <span style="color: #2E7D32; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #2E7D32; vertical-align: middle;">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            [ CONFORME ]
+                        </span>
+                        <span style="color: var(--text-color);">${item.texto}</span>
+                    </div>
+                `;
+            });
+            checklistHtml += `
+                    </div>
+                </div>
+            `;
+        });
+
+        checklistHtml += `
+                </div>
+                
+                <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 15px; text-align: center; font-size: 0.9rem; break-inside: avoid;">
+                    <p>Resultado da Análise: <b>CONFORMIDADE DOCUMENTAL CONSTATADA</b></p>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">Membros da CIS/PCCTAE - IF Baiano</p>
+                    <p style="font-size: 0.75rem; color: #999; margin-top: 5px;">(Este checklist acompanha o Parecer de Deferimento nº _____/${new Date(dataParecer + "T00:00:00").getFullYear()} e deve ser anexado ao processo eletrônico no SUAP)</p>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById("print-checklist-content").innerHTML = checklistHtml;
+
+        showToast("Parecer, Minuta e Checklist de Conformidade gerados com sucesso!");
     }
 
     mudarAba("documento");
@@ -485,17 +554,34 @@ function formatarDataPorExtenso(str) {
 function initTabs() {
     document.getElementById("tab-btn-documento").addEventListener("click", () => mudarAba("documento"));
     document.getElementById("tab-btn-portaria").addEventListener("click", () => mudarAba("portaria"));
+    
+    const tabChecklist = document.getElementById("tab-btn-checklist");
+    if (tabChecklist) {
+        tabChecklist.addEventListener("click", () => mudarAba("checklist"));
+    }
 }
 
 function mudarAba(aba) {
-    const tabs = { documento: "tab-btn-documento", portaria: "tab-btn-portaria" };
-    const panels = { documento: "panel-documento", portaria: "panel-portaria" };
+    const tabs = { 
+        documento: "tab-btn-documento", 
+        portaria: "tab-btn-portaria",
+        checklist: "tab-btn-checklist"
+    };
+    const panels = { 
+        documento: "panel-documento", 
+        portaria: "panel-portaria",
+        checklist: "panel-checklist"
+    };
 
     Object.keys(tabs).forEach(key => {
-        const isActive = key === aba;
-        document.getElementById(tabs[key]).classList.toggle("active", isActive);
-        document.getElementById(tabs[key]).setAttribute("aria-selected", isActive);
-        document.getElementById(panels[key]).classList.toggle("active", isActive);
+        const tabEl = document.getElementById(tabs[key]);
+        const panelEl = document.getElementById(panels[key]);
+        if (tabEl && panelEl) {
+            const isActive = key === aba;
+            tabEl.classList.toggle("active", isActive);
+            tabEl.setAttribute("aria-selected", isActive);
+            panelEl.classList.toggle("active", isActive);
+        }
     });
 }
 

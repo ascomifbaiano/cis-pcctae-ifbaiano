@@ -1631,7 +1631,9 @@ body.high-contrast .progress-bar-fill::after {
   .toast,
   .step-nav-buttons,
   .stepper-nav,
-  .checklist-actions {
+  .checklist-actions,
+  .tabs-control,
+  .result-box-header {
     display: none !important;
   }
 

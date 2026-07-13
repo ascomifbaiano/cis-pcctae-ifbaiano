@@ -244,6 +244,10 @@
                     <div class="tabs-control" role="tablist">
                         <button id="tab-btn-documento" class="tab-button active" role="tab" aria-selected="true" aria-controls="panel-documento">Despacho / Parecer</button>
                         <button id="tab-btn-portaria" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-portaria">Minuta de Portaria</button>
+                        <button id="tab-btn-checklist" class="tab-button" role="tab" aria-selected="false" aria-controls="panel-checklist" style="display: none; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            Checklist Concluído
+                        </button>
                     </div>
 
                     <!-- Painel Despacho/Parecer -->
@@ -268,6 +272,24 @@
                             </button>
                         </div>
                         <textarea id="text-portaria" class="text-result" readonly aria-label="Texto da minuta da portaria"></textarea>
+                    </div>
+
+                    <!-- Painel Checklist Concluído -->
+                    <div id="panel-checklist" class="tab-panel" role="tabpanel">
+                        <div class="result-box-header">
+                            <span class="badge badge-success">CHECKLIST DE CONFORMIDADE</span>
+                            <button class="btn btn-outline btn-sm" onclick="window.print()" aria-label="Imprimir checklist de conformidade">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                  <rect x="6" y="14" width="12" height="8"></rect>
+                                </svg>
+                                Imprimir Checklist
+                            </button>
+                        </div>
+                        <div id="print-checklist-content" class="text-result" style="overflow-y: auto; background-color: var(--bg-card); color: var(--text-color); border: 1px solid var(--border-color); padding: 25px; border-radius: var(--border-radius-sm); font-family: inherit; height: 350px;">
+                            <!-- Preenchido dinamicamente com o checklist completo da conformidade -->
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
