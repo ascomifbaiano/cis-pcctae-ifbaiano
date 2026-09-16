@@ -316,8 +316,8 @@ body {
 .header-logo,
 .logo-img,
 #header-logo {
-  height: 48px;
-  max-height: 48px;
+  height: 55px;
+  max-height: 55px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -1672,8 +1672,8 @@ body.high-contrast .progress-bar-fill::after {
   .header-logo,
   .logo-img,
   #header-logo {
-    height: 41px;
-    max-height: 41px;
+    height: 47px;
+    max-height: 47px;
   }
 
   .title-area h1,
