@@ -316,8 +316,8 @@ body {
 .header-logo,
 .logo-img,
 #header-logo {
-  height: 42px;
-  max-height: 42px;
+  height: 48px;
+  max-height: 48px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -359,48 +359,46 @@ h1.gradient-text {
 
 /* ----- 5. STEPPER NAVIGATOR ------------------------------- */
 .stepper-nav {
-  max-width: 720px;
-  margin: var(--space-8) auto var(--space-6);
+  max-width: 960px;
+  margin: var(--space-7) auto var(--space-6);
   padding: 0 var(--space-6);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 0;
+  position: relative;
+}
+
+.stepper-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-3);
   position: relative;
 }
 
 .step-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   position: relative;
-  flex: 1;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
-
-/* Connecting line between steps */
-.step-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 20px;
-  left: calc(50% + 24px);
-  width: calc(100% - 48px);
-  height: 2px;
-  background: var(--border);
-  z-index: 0;
-  transition: background var(--duration) var(--ease);
-}
-
-.step-item.completed:not(:last-child)::after {
-  background: var(--green-500);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--duration) var(--ease);
+  flex-shrink: 0;
 }
 
 .step-circle {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -408,38 +406,66 @@ h1.gradient-text {
   font-size: 0.875rem;
   font-weight: 700;
   border: 2px solid var(--border);
-  background: var(--bg-card);
+  background: var(--bg-body);
   color: var(--text-muted);
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   transition: all var(--duration) var(--ease);
 }
 
 .step-label {
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--text-muted);
-  text-align: center;
-  line-height: 1.3;
-  max-width: 110px;
+  text-align: left;
+  line-height: 1.2;
+  white-space: nowrap;
   transition: color var(--duration) var(--ease);
 }
 
+/* Connecting line between steps */
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  min-width: 20px;
+  max-width: 120px;
+  border-radius: var(--radius-full);
+  transition: all var(--duration) var(--ease);
+}
+
+.step-connector.completed {
+  background: var(--green-500);
+  height: 2.5px;
+}
+
 /* Active step */
+.step-item.active {
+  border-color: var(--green-600);
+  background: var(--green-25);
+  box-shadow: 0 0 0 3px var(--ring), var(--shadow-sm);
+}
+
 .step-item.active .step-circle {
   background: var(--green-600);
   border-color: var(--green-600);
   color: var(--text-inverse);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   animation: pulse 2s infinite;
 }
 
 .step-item.active .step-label {
-  color: var(--green-800);
-  font-weight: 600;
+  color: var(--green-900);
+  font-weight: 700;
 }
 
 /* Completed step */
+.step-item.completed {
+  border-color: var(--green-500);
+  background: var(--green-25);
+}
+
 .step-item.completed .step-circle {
   background: var(--green-600);
   border-color: var(--green-600);
@@ -447,14 +473,14 @@ h1.gradient-text {
 }
 
 .step-item.completed .step-label {
-  color: var(--green-700);
-  font-weight: 500;
+  color: var(--green-800);
+  font-weight: 600;
 }
 
 /* Checkmark inside completed circle */
 .step-item.completed .step-circle::after {
   content: '✓';
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
@@ -463,13 +489,19 @@ h1.gradient-text {
 }
 
 /* Hover */
-.step-item:hover .step-circle {
+.step-item:hover:not(.active) {
   border-color: var(--green-400);
+  background: var(--green-50);
   transform: translateY(-1px);
 }
 
-.step-item:hover .step-label {
-  color: var(--text-dark);
+.step-item:hover:not(.active) .step-circle {
+  border-color: var(--green-500);
+  color: var(--green-700);
+}
+
+.step-item:hover:not(.active) .step-label {
+  color: var(--green-700);
 }
 
 /* ----- 6. STEP PANELS ------------------------------------- */
@@ -1501,6 +1533,22 @@ body.high-contrast {
   background-image: none;
 }
 
+body.high-contrast .acc-btn {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border-color: #FFFF00 !important;
+}
+
+body.high-contrast .acc-btn svg {
+  stroke: #FFFF00 !important;
+}
+
+body.high-contrast .acc-btn:hover {
+  background: #222200 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
 body.high-contrast .main-header {
   border-image: none;
   border-bottom: 2px solid var(--green-600);
@@ -1524,6 +1572,12 @@ body.high-contrast .cookie-banner {
   background: rgba(0, 0, 0, 0.95);
   border: 2px solid var(--green-600);
   backdrop-filter: none;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .cookie-banner h4,
+body.high-contrast .cookie-banner p {
+  color: #FFFFFF !important;
 }
 
 body.high-contrast .text-result {
@@ -1547,9 +1601,31 @@ body.high-contrast .tab-button.active {
   color: #000000;
 }
 
+body.high-contrast .step-item {
+  background: #000000;
+  border-color: #444444;
+}
+
+body.high-contrast .step-item.active,
+body.high-contrast .step-item.completed {
+  background: #111111;
+  border-color: #FFFF00;
+}
+
 body.high-contrast .step-item.active .step-circle,
 body.high-contrast .step-item.completed .step-circle {
+  background: #FFFF00;
+  border-color: #FFFF00;
   color: #000000;
+}
+
+body.high-contrast .step-item.active .step-label,
+body.high-contrast .step-item.completed .step-label {
+  color: #FFFF00;
+}
+
+body.high-contrast .step-connector.completed {
+  background: #FFFF00;
 }
 
 body.high-contrast .fab-library {
@@ -1596,8 +1672,8 @@ body.high-contrast .progress-bar-fill::after {
   .header-logo,
   .logo-img,
   #header-logo {
-    height: 36px;
-    max-height: 36px;
+    height: 41px;
+    max-height: 41px;
   }
 
   .title-area h1,
@@ -1619,8 +1695,7 @@ body.high-contrast .progress-bar-fill::after {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding: 0 var(--space-3);
-    margin: var(--space-5) auto var(--space-4);
-    gap: 0;
+    margin: var(--space-4) auto var(--space-3);
     scrollbar-width: none;
   }
 
@@ -1628,21 +1703,30 @@ body.high-contrast .progress-bar-fill::after {
     display: none;
   }
 
+  .stepper-container {
+    width: auto;
+    min-width: 100%;
+    justify-content: flex-start;
+    gap: var(--space-2);
+  }
+
+  .step-item {
+    padding: 6px 12px;
+    gap: var(--space-2);
+  }
+
   .step-circle {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     font-size: 0.75rem;
   }
 
-  .step-item:not(:last-child)::after {
-    top: 16px;
-    left: calc(50% + 20px);
-    width: calc(100% - 40px);
+  .step-label {
+    font-size: 0.75rem;
   }
 
-  .step-label {
-    font-size: 0.65rem;
-    max-width: 80px;
+  .step-connector {
+    min-width: 16px;
   }
 
   /* Form single column */

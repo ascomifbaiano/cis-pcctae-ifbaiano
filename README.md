@@ -116,6 +116,7 @@ Itens validados pelo autoteste:
 
 ## 8. Histórico de Versões
 
+- **Versão 2.2**: Reestruturação das Etapas de Análise (Stepper Navigator) para layout estritamente horizontal tanto entre etapas quanto entre círculos numerados e rótulos, com conector progressivo dinâmico e suporte completo ao modo Alto Contraste (WCAG 2.1 AAA). Calibração e aumento em 15% na altura da logomarca horizontal no cabeçalho institucional (48px) para perfeito equilíbrio visual.
 - **Versão 2.1**: Inclusão da modalidade Prorrogação de Afastamento Integral para Pós-Graduação Stricto Sensu, cálculo de tempestividade da janela regimental de 60 a 70 dias, validação de limite acumulado do Artigo 4º da Resolução CONSUP número 63/2020, inserção compulsória da Declaração de alinhamento com o PDP emitida pelo NUCAP ou NAGP, atualização da portaria de designação da CIS/PCCTAE para a Portaria 374/2026 - RET-GAB/RET/IFBAIANO e formatação automática do marcador [PENDÊNCIA] em negrito visual na tela e no clipboard rich text para o SUAP.
 - **Versão 2.0**: Redesenho completo da interface para o padrão institucional do IF Baiano, integração com a PNDP (Decreto 9.991/2019) e criação dos geradores de despachos e pareceres em texto puro e formato timbrado.
 - **Versão 1.0**: Lançamento inicial da ferramenta para apoio às análises da CIS/PCCTAE.
