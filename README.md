@@ -1,43 +1,121 @@
-# Analisador de Conformidade e Pareceres CIS-PCCTAE
+# Analisador CIS-PCCTAE
 
-Este repositório contém os códigos-fontes e recursos da aplicação Single Page Application (SPA) desenvolvida para a Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano. A ferramenta otimiza a triagem documental e automatiza a emissão de despachos e pareceres de processos eletrônicos (SUAP).
+Sistema de triagem técnica documental, conferência de conformidade regimental e geração automatizada de atos administrativos para a Comissão Interna de Supervisão do Plano de Carreira dos Cargos Técnico-Administrativos em Educação (CIS-PCCTAE) do Instituto Federal de Educação, Ciência e Tecnologia Baiano (IF Baiano).
 
-## 📁 Estrutura do Repositório
+---
 
-- **[index.html](file:///G:/Meu%20Drive/APP/2.%20Projetos%20e%20Aplica%C3%A7%C3%B5es/2.2%20Aplica%C3%A7%C3%B5es%20e%20C%C3%B3digos%20(GitHub)/IF%20Baiano%20APPs/analisador-cis-pcctae/index.html)**: Interface de usuário responsiva com suporte nativo a acessibilidade (zoom de fonte e contraste).
-- **[style.css](file:///G:/Meu%20Drive/APP/2.%20Projetos%20e%20Aplica%C3%A7%C3%B5es/2.2%20Aplica%C3%A7%C3%B5es%20e%20C%C3%B3digos%20(GitHub)/IF%20Baiano%20APPs/analisador-cis-pcctae/style.css)**: Design System Vanilla CSS estruturado sob as cores oficiais do IF Baiano.
-- **[app.js](file:///G:/Meu%20Drive/APP/2.%20Projetos%20e%20Aplica%C3%A7%C3%B5es/2.2%20Aplica%C3%A7%C3%B5es%20e%20C%C3%B3digos%20(GitHub)/IF%20Baiano%20APPs/analisador-cis-pcctae/app.js)**: Lógica client-side para o checklist interativo, verificação de retroatividade e gerador de documentos.
-- **[marca-if-baiano-horizontal.png](file:///G:/Meu%20Drive/APP/2.%20Projetos%20e%20Aplica%C3%A7%C3%B5es/2.2%20Aplica%C3%A7%C3%B5es%20e%20C%C3%B3digos%20(GitHub)/IF%20Baiano%20APPs/analisador-cis-pcctae/marca-if-baiano-horizontal.png)**: Logotipo institucional para o cabeçalho.
-- **[docs/](file:///G:/Meu%20Drive/APP/2.%20Projetos%20e%20Aplica%C3%A7%C3%B5es/2.2%20Aplica%C3%A7%C3%B5es%20e%20C%C3%B3digos%20(GitHub)/IF%20Baiano%20APPs/analisador-cis-pcctae/docs)**: Pasta local com PDFs de normativas integradas à biblioteca digital interna.
-  - `Resolucao_Consup_63_2020.pdf`: Regulamento geral de afastamentos stricto sensu.
-  - `Instrucao-Normativa-34-2020_Consolidada.pdf`: Regulamento consolidado de alocação de carga horária semanal.
+## 1. Visão Geral e Propósito Institucional
 
-## 🚀 Como Executar e Hospedar
+O **Analisador CIS-PCCTAE** é uma ferramenta web de apoio à governança e à gestão de pessoas no âmbito do IF Baiano. Desenvolvido para conferir celeridade, uniformidade e segurança jurídica à instrução processual eletrônica no Sistema Unificado de Administração Pública (SUAP), o sistema guia o relator ou analista da comissão na conferência exaustiva de documentos obrigatórios, calculando prazos regimentais e gerando minutas de despachos, pareceres e portarias em estrita observância à legislação federal e às normas internas da instituição.
 
-1. **Uso Local**: Dê um clique duplo sobre o arquivo `index.html` em sua máquina local para iniciar a ferramenta diretamente no navegador.
-2. **Hospedagem (GitHub Pages)**: Publique esta pasta no seu GitHub e ative o GitHub Pages nas configurações do repositório para disponibilizar a ferramenta online em uma URL pública HTTPS (ex: `https://seu-usuario.github.io/analisador-cis-pcctae/`).
+---
 
-## 🛡️ Privacidade e LGPD
-A aplicação foi projetada para atuar em conformidade estrita com a LGPD. Todos os dados inseridos (nome, processo, SIAPE) são lidos em memória de forma volátil apenas para a composição e cópia rápida dos textos. O sistema não utiliza banco de dados externo ou armazenamento em cookies de terceiros.
+## 2. Modalidades de Processos Atendidas
 
-## 📜 Log de Atualizações (Changelog)
+O sistema disponibiliza fluxos documentais independentes e parametrizados:
 
-### 📅 13/07/2026 - Checklist de Conformidade Integrado e Revisão de Normativas
-- 📋 **Checklist Concluído na Ata**: Adicionada a nova aba "Checklist Concluído" no passo final quando não há pendências documentais (Deferimento). Esta aba gera o checklist estruturado em conformidade com o preenchimento, ideal para impressão direta ou exportação em PDF para instrução do processo eletrônico no SUAP.
-- ⚙️ **Simplificação do Checklist de Alocação**: 
-  - Removidos os tópicos redundantes de anuência das chefias imediata e geral, visto que tais manifestações já se encontram embutidas na assinatura eletrônica do próprio formulário anexo.
-  - Criado o tópico unificado "Demonstração de incompatibilidade de horários" (grade de horário oficial, declaração do orientador/responsável e/ou mapa de deslocamento) para maior flexibilidade na triagem documental.
-- 📂 **Ajuste no Checklist de Afastamento**: Correção na redação do item do PDP para "Tema/ação de desenvolvimento previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano", eliminando ambiguidade técnica.
-- 🖨️ **Polimento de Impressão CSS**: Atualizado o bloco `@media print` no `style.css` para ocultar controles do sistema (abas `.tabs-control` e cabeçalhos `.result-box-header`) na impressão das minutas, pareceres e checklists.
+1. **Afastamento Integral para Pós-Graduação Stricto Sensu (Concessão Inicial)**:
+   - Análise de pedidos de afastamento integral no país ou no exterior para cursos de Mestrado, Doutorado e Pós-Doutorado.
+   - Verificação de enquadramento em Edital de Seleção e chamada pública interna.
+   - Conferência de tempo de efetivo exercício, inexistência de penalidades disciplinares e cumprimento do interstício legal.
+   - Validação da Declaração do NUCAP ou NAGP atestando que a ação de desenvolvimento está prevista no Plano de Desenvolvimento de Pessoas (PDP) do exercício.
 
-### 📅 11/07/2026 - Redesign UI/UX Premium & Atualização de Fluxo (Reitora Ozenice)
-- 📂 **Migração de Código**: Movi e estruturei a aplicação na pasta central de repositórios do GitHub (`IF Baiano APPs/analisador-cis-pcctae`) para versionamento.
-- 📚 **Biblioteca Digital & Sidebar**: Criei a pasta `docs/` com PDFs de normativas locais e implementei uma gaveta/sidebar flutuante interativa com um botão FAB para acesso à legislação.
-- 🎛️ **Fluxo Stepper Wizard**: Dividi o formulário e checklist em um fluxo guiado passo a passo de 3 etapas com indicador visual de progresso (`stepper-nav`).
-- 📊 **Checklist de Conformidade**: Adicionei barra de progresso dinâmica em tempo real para o preenchimento de documentos e redesenhei os checkboxes com marcadores SVG personalizados.
-- ♿ **Acessibilidade & UI**: Inseri controles de acessibilidade (Alto Contraste e Zoom de Fonte), suporte total a teclado e padronizei a paleta oficial do IF Baiano (Verde `#3E9A2D` e Vermelho `#C80710`).
-- 🔔 **Toast Notifications**: Adicionei um sistema de toasts na base da tela para dar feedback ao copiar documentos ou ao reiniciar o formulário.
-- 🏫 **Dados Dinâmicos de Lotação**: Inclusão de campos no formulário para Campus de Lotação (com seleção de todas as unidades tradicionais da instituição, Reitoria e os 4 novos campi de Remanso, Ribeira do Pombal, Ruy Barbosa e Santo Estêvão), Setor e Cargo do servidor.
-- ⚖️ **Correção do Fluxo Administrativo**: Ajuste no despacho de diligência para devolver o processo diretamente ao setor de lotação do servidor, e alteração do encaminhamento do parecer de deferimento para o Gabinete da Reitora (em vez de NAGP).
-- 👑 **Atualização da Reitoria**: Alterada a assinatura e o preâmbulo das minutas de portaria para a atual reitora do IF Baiano, Ozenice Silva dos Santos, utilizando os dados oficiais fornecidos (Decreto de 20/05/2026, publicado no DOU de 21/05/2026, Seção 2, pág. 1), com a respectiva flexão de gênero gramatical.
-- ♿ **Ajuste na Barra de Acessibilidade**: Reposicionamento dos controles de acessibilidade (Alto Contraste, A- e A+) para o lado esquerdo da tela e redesign dos botões para um formato sólido de alto contraste (fundo branco com letras escuras), resolvendo os problemas de legibilidade e visualização.
+2. **Prorrogação de Afastamento Integral para Pós-Graduação Stricto Sensu (Nova Modalidade)**:
+   - Avaliação técnica para extensão de prazo concedido por portaria anterior.
+   - Registro e validação da Portaria Concessória Inicial (número, data e período inicial usufruído).
+   - Validação da janela de tempestividade regimental de 60 a 70 dias de antecedência entre a data de análise e o início da vigência prorrogada.
+   - Verificação dos limites globais acumulados de afastamento fixados no Artigo 4º da Resolução CONSUP número 63/2020 (até 24 meses para Mestrado, até 48 meses para Doutorado e até 12 meses para Pós-Doutorado).
+   - Conferência da Declaração formal do NUCAP ou NAGP e cópia do PDP aprovado.
+   - Análise da justificativa circunstanciada e do cronograma de conclusão emitidos pelo(a) orientador(a) acadêmico(a).
+
+3. **Alocação de Carga Horária Semanal para Ações de Desenvolvimento**:
+   - Concessão de carga horária para capacitação e aperfeiçoamento profissional em serviço.
+
+---
+
+## 3. Fundamentação Legal e Normativa
+
+Todos os checklists, alertas de conformidade e minutas documentais estão alicerçados no arcabouço normativo vigente:
+
+- **Lei Federal número 11.091, de 12 de janeiro de 2005**: Estrutura o Plano de Carreira dos Cargos Técnico-Administrativos em Educação (PCCTAE) no âmbito das Instituições Federais de Ensino vinculadas ao Ministério da Educação.
+- **Lei Federal número 8.112, de 11 de dezembro de 1990**: Regime Jurídico Único dos Servidores Públicos Civis da União, em especial os Artigos 95, 96-A e 102.
+- **Decreto Federal número 9.991, de 28 de agosto de 2019** (alterado pelo Decreto Federal número 10.506, de 02 de outubro de 2020): Regulamenta a Política Nacional de Desenvolvimento de Pessoas (PNDP).
+- **Instrução Normativa ME/SIPEC número 21, de 01 de fevereiro de 2021**: Estabelece orientações aos órgãos e entidades do SIPEC para afastamentos com foco no desenvolvimento de pessoas.
+- **Resolução CONSUP/IF Baiano número 63/2020, de 30 de março de 2020**: Regulamenta a concessão de afastamento para participação em programas de pós-graduação stricto sensu e de pós-doutorado para servidores técnico-administrativos do IF Baiano.
+
+---
+
+## 4. Funcionalidades e Recursos do Sistema
+
+### 4.1. Assistente de Dados Processuais (Etapa 1)
+- Identificação do interessado, matrícula SIAPE, cargo e unidade de lotação (Campus ou Reitoria).
+- Seleção de nível de pós-graduação (Mestrado, Doutorado ou Pós-Doutorado).
+- Seção dinâmica para Prorrogação com captação da Portaria anterior e período vigente.
+- Motor de cálculo de tempestividade com sinalização visual (tempestivo, intempestivo ou com antecedência excessiva).
+
+### 4.2. Checklist Dinâmico de Conformidade (Etapa 2)
+- Estruturação em 5 seções documentais:
+  - Seção 1: Requerimento padronizado e anuências expressas da chefia imediata e da Direção-Geral ou Reitoria.
+  - Seção 2: Documentos comprobatórios da concessão inicial e da situação acadêmica regular.
+  - Seção 3: Justificativa acadêmica circunstanciada e cronograma de finalização firmado pelo orientador.
+  - Seção 4: Alinhamento institucional e conformidade com a PNDP (Declaração formal do NUCAP ou NAGP com cópia comprobatória da página do PDP).
+  - Seção 5: Tempestividade do requerimento e limites globais regimentais.
+- Indicador percentual de conformidade atualizado a cada seleção.
+
+### 4.3. Gerador Integrado de Documentos Administrativos (Etapa 3)
+- **Parecer da CIS/PCCTAE**: Documento formal de deferimento circunstanciado com histórico, fundamentação, citação à comissão designada pela Portaria 374/2026 - RET-GAB/RET/IFBAIANO e recomendação de homologação pela Reitoria.
+- **Despacho de Diligência / Notificação de Pendências**: Emissão instantânea relacionando itens não atendidos com prazo para saneamento do processo, com destaque visual e formatação em negrito para o termo [PENDÊNCIA] na tela e na área de transferência rich text (HTML) para colagem direta no editor do SUAP.
+- **Minuta de Portaria do Gabinete da Reitoria**: Texto legal padronizado contendo o preâmbulo da Reitora, menção à manifestação favorável da CIS designada pela Portaria 374/2026 e termos da concessão ou prorrogação.
+- **Checklist Timbrado**: Impressão e exportação direta da folha de checagem com o cabeçalho institucional do IF Baiano.
+
+---
+
+## 5. Estrutura do Diretório
+
+```
+analisador-cis-pcctae/
+├── index.html                           # Interface visual moderna e formulário estruturado
+├── app.js                               # Regras de negócio, checklists e geradores de minutas
+├── style.css                            # Folha de estilos responsiva com identidade IF Baiano
+├── harness.py                           # Suíte automatizada de testes de integridade e regras
+├── EXECUTAR_ANALISADOR-CIS-PCCTAE.bat   # Script para inicialização local simplificada
+├── favicon.png                          # Ícone oficial da aplicação
+├── marca-if-baiano-horizontal.png       # Brasão institucional horizontal para cabeçalhos
+├── marca-if-baiano-vertical.png         # Brasão institucional vertical
+├── planejamento_atualizacao_prorrogacao.md # Especificação técnica do módulo de prorrogação
+└── README.md                            # Documentação técnica completa do projeto
+```
+
+---
+
+## 6. Como Executar a Aplicação
+
+A aplicação foi projetada como um utilitário web estático de alta confiabilidade, sem necessidade de servidores complexos ou banco de dados externo:
+
+1. **Execução Direta**: Dê um duplo clique no arquivo `EXECUTAR_ANALISADOR-CIS-PCCTAE.bat` ou abra diretamente o arquivo `index.html` em qualquer navegador web moderno (Google Chrome, Microsoft Edge, Mozilla Firefox).
+2. **Uso no SUAP**: Os textos gerados nos botões de cópia rápida podem ser colados diretamente no editor de despachos ou documentos eletrônicos do SUAP.
+
+---
+
+## 7. Suíte de Testes Automatizados (Harness)
+
+Para validar a integridade dos arquivos, sintaxe, regras de negócio e a conformidade com as diretrizes do laboratório, execute no terminal:
+
+```powershell
+python harness.py
+```
+
+Itens validados pelo autoteste:
+- Existência e conformidade do arquivo de documentação `README.md`.
+- Compilação e ausência de erros de sintaxe em scripts Python.
+- Presença e carregamento de Favicon oficial.
+- Presença e integridade das regras da modalidade Prorrogação e declaração do PDP.
+- Cumprimento rigoroso da Regra 11 (Veto absoluto a caracteres emojis em código e documentação).
+
+---
+
+## 8. Histórico de Versões
+
+- **Versão 2.1**: Inclusão da modalidade Prorrogação de Afastamento Integral para Pós-Graduação Stricto Sensu, cálculo de tempestividade da janela regimental de 60 a 70 dias, validação de limite acumulado do Artigo 4º da Resolução CONSUP número 63/2020, inserção compulsória da Declaração de alinhamento com o PDP emitida pelo NUCAP ou NAGP, atualização da portaria de designação da CIS/PCCTAE para a Portaria 374/2026 - RET-GAB/RET/IFBAIANO e formatação automática do marcador [PENDÊNCIA] em negrito visual na tela e no clipboard rich text para o SUAP.
+- **Versão 2.0**: Redesenho completo da interface para o padrão institucional do IF Baiano, integração com a PNDP (Decreto 9.991/2019) e criação dos geradores de despachos e pareceres em texto puro e formato timbrado.
+- **Versão 1.0**: Lançamento inicial da ferramenta para apoio às análises da CIS/PCCTAE.

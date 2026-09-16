@@ -68,12 +68,13 @@ const CHECKLISTS = {
                 itens: [
                     { id: "af_1_1", texto: "Servidor não é ocupante de Função Gratificada (FG) ou Cargo de Direção (CD), ou solicitou dispensa/exoneração." },
                     { id: "af_1_2", texto: "Servidor não possui jornada com carga horária reduzida, ou solicitou retorno ao tempo integral." },
-                    { id: "af_1_3", texto: "Não responde a Processo Administrativo Disciplinar (PAD)." },
+                    { id: "af_1_3", texto: "Não responde a Processo Administrativo Disciplinar (PAD) ou apresentou declaração de compromisso aprovada pela CPAD." },
                     { id: "af_1_4", texto: "Período solicitado respeita o limite (Mestrado: até 24m / Doutorado: até 48m / Pós-Doc: até 12m)." },
-                    { id: "af_1_5", texto: "Tema/ação de desenvolvimento previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano." },
-                    { id: "af_1_6", texto: "O curso possui alinhamento direto com a área de atribuição do cargo efetivo do servidor." },
-                    { id: "af_1_7", texto: "Não possui curso concluído no mesmo nível de titulação pretendido." },
-                    { id: "af_1_8", texto: "Assinaturas do solicitante, chefia imediata e Direção Geral/Diretor Sistêmico no formulário." }
+                    { id: "af_1_5", texto: "Declaração do NUCAP ou NAGP atestando que o tema/ação de desenvolvimento está previsto no Plano de Desenvolvimento de Pessoas (PDP) do IF Baiano." },
+                    { id: "af_1_6", texto: "Cópia da página do PDP do IF Baiano atual na qual esteja indicada a necessidade de desenvolvimento que o curso pleiteado atende." },
+                    { id: "af_1_7", texto: "O curso possui alinhamento direto com a área de atribuição do cargo efetivo do servidor." },
+                    { id: "af_1_8", texto: "Não possui curso concluído no mesmo nível de titulação pretendido." },
+                    { id: "af_1_9", texto: "Assinaturas do solicitante, chefia imediata e Direção Geral/Diretor Sistêmico no formulário." }
                 ]
             },
             {
@@ -110,6 +111,51 @@ const CHECKLISTS = {
                 ]
             }
         ]
+    },
+    prorrogacao: {
+        titulo: "Prorrogação de Afastamento Integral (Pós-Graduação Stricto Sensu)",
+        secoes: [
+            {
+                titulo: "Requerimento e Autorizações Institucionais",
+                itens: [
+                    { id: "pro_1_1", texto: "Requerimento preenchido no modelo próprio do SUAP (Requerimento de Prorrogação de Afastamento para Participação em Programa de Pós-graduação Stricto Sensu no País ou no Exterior – TAE)." },
+                    { id: "pro_1_2", texto: "Formulário devidamente assinado eletronicamente pelo(a) servidor(a) requerente." },
+                    { id: "pro_1_3", texto: "Assinatura digital e anuência expressa da chefia imediata no requerimento." },
+                    { id: "pro_1_4", texto: "Assinatura digital e anuência do Diretor Geral do campus (servidores nos campi) ou Pró-Reitor/Diretor Sistêmico (servidores na Reitoria)." }
+                ]
+            },
+            {
+                titulo: "Documentos da Concessão Originária e Acadêmicos",
+                itens: [
+                    { id: "pro_2_1", texto: "Cópia da Portaria referente à concessão do primeiro período de afastamento anexada aos autos." },
+                    { id: "pro_2_2", texto: "Comprovante oficial de matrícula emitido recentemente pela instituição promotora do curso." },
+                    { id: "pro_2_3", texto: "Histórico escolar atualizado demonstrando aproveitamento acadêmico satisfatório." }
+                ]
+            },
+            {
+                titulo: "Justificativa e Cronograma do(a) Orientador(a)",
+                itens: [
+                    { id: "pro_3_1", texto: "Documento oficial do(a) orientador(a) justificando fundamentadamente a necessidade da prorrogação." },
+                    { id: "pro_3_2", texto: "Declaração expressa do(a) orientador(a) delimitando o prazo necessário para finalização das atividades e conclusão do curso." },
+                    { id: "pro_3_3", texto: "Cronograma circunstanciado das atividades acadêmicas a serem desenvolvidas durante o período prorrogado." }
+                ]
+            },
+            {
+                titulo: "Alinhamento Institucional e Previsão no PDP",
+                itens: [
+                    { id: "pro_4_1", texto: "Declaração do NUCAP (para servidores da Reitoria) ou NAGP (para servidores dos Campi) atestando que o tema/ação de desenvolvimento está previsto no Plano de Desenvolvimento de Pessoas (PDP) vigente do IF Baiano." },
+                    { id: "pro_4_2", texto: "Cópia da página do PDP do IF Baiano atual na qual esteja indicada expressamente a necessidade de desenvolvimento que o curso pleiteado atende." }
+                ]
+            },
+            {
+                titulo: "Tempestividade e Limites Temporais",
+                itens: [
+                    { id: "pro_5_1", texto: "Encaminhamento do processo à CIS dentro da antecedência regimental (com no máximo 70 dias e no mínimo 60 dias da data de início da prorrogação)." },
+                    { id: "pro_5_2", texto: "Prazo total acumulado compatível com o teto legal do Art. 4º da Resolução CONSUP nº 63/2020 (Mestrado até 24m, Doutorado até 48m, Pós-Doc até 12m)." },
+                    { id: "pro_5_3", texto: "Vigência da prorrogação sem efeitos retroativos, em observância ao Artigo 37 da Constituição Federal e Artigo 60 da Lei nº 9.784/1999." }
+                ]
+            }
+        ]
     }
 };
 
@@ -129,14 +175,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // Renderizar checklist padrão
     renderChecklist("afastamento");
 
-    // Event Listeners
-    document.getElementById("tipo-processo").addEventListener("change", (e) => {
-        renderChecklist(e.target.value);
+    // Alternar campos conforme o tipo de processo
+    const atualizarVisibilidadeCampos = () => {
+        const tipo = document.getElementById("tipo-processo").value;
+        const isProrrogacao = tipo === "prorrogacao";
+        const secaoCamposPro = document.getElementById("secao-campos-prorrogacao");
+        if (secaoCamposPro) {
+            secaoCamposPro.classList.toggle("hidden", !isProrrogacao);
+        }
+        renderChecklist(tipo);
         verificarRetroatividade();
+        verificarTempestividadeProrrogacao();
+    };
+
+    document.getElementById("tipo-processo").addEventListener("change", atualizarVisibilidadeCampos);
+
+    document.getElementById("data-inicio-pretendida").addEventListener("change", () => {
+        verificarRetroatividade();
+        verificarTempestividadeProrrogacao();
+    });
+    document.getElementById("data-parecer").addEventListener("change", () => {
+        verificarRetroatividade();
+        verificarTempestividadeProrrogacao();
     });
 
-    document.getElementById("data-inicio-pretendida").addEventListener("change", verificarRetroatividade);
-    document.getElementById("data-parecer").addEventListener("change", verificarRetroatividade);
+    const inputsProrrogacao = ["portaria-origem-numero", "portaria-origem-data", "periodo-origem-inicio", "periodo-origem-fim"];
+    inputsProrrogacao.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", verificarTempestividadeProrrogacao);
+    });
 
     // Botões do Checklist
     document.getElementById("btn-marcar-todos").addEventListener("click", () => alterarTodosChecks(true));
@@ -173,6 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cookie Banner
     initCookieBanner();
+
+    // Visualizador de Documentos Formatados
+    initDocumentoViewer();
 
     // Cópia
     setupCopyButtons();
@@ -219,8 +289,15 @@ function goToStep(step) {
 function resetarAnalise() {
     document.getElementById("form-processo").reset();
     document.getElementById("data-parecer").value = new Date().toISOString().split("T")[0];
-    renderChecklist(document.getElementById("tipo-processo").value);
+    const tipo = document.getElementById("tipo-processo").value;
+    const secaoCamposPro = document.getElementById("secao-campos-prorrogacao");
+    if (secaoCamposPro) secaoCamposPro.classList.add("hidden");
+    renderChecklist(tipo);
     document.getElementById("retroatividade-warning").classList.add("hidden");
+    const warningTemp = document.getElementById("tempestividade-warning");
+    if (warningTemp) warningTemp.classList.add("hidden");
+    const boxTemp = document.getElementById("box-tempestividade-resumo");
+    if (boxTemp) boxTemp.classList.add("hidden");
     goToStep(1);
     showToast("Formulário reiniciado. Pronto para uma nova análise.");
 }
@@ -334,6 +411,66 @@ function verificarRetroatividade() {
 }
 
 /* ==========================================================================
+   TEMPESTIVIDADE DA PRORROGAÇÃO (JANELA REGIMENTAL DE 60 A 70 DIAS)
+   ========================================================================== */
+function verificarTempestividadeProrrogacao() {
+    const tipo = document.getElementById("tipo-processo").value;
+    const warningDiv = document.getElementById("tempestividade-warning");
+    const resumoBox = document.getElementById("box-tempestividade-resumo");
+    const resumoDot = document.getElementById("tempestividade-dot");
+    const resumoTexto = document.getElementById("tempestividade-resumo-texto");
+
+    if (tipo !== "prorrogacao") {
+        if (warningDiv) warningDiv.classList.add("hidden");
+        if (resumoBox) resumoBox.classList.add("hidden");
+        return;
+    }
+
+    const dataInicioStr = document.getElementById("data-inicio-pretendida").value;
+    const dataParecerStr = document.getElementById("data-parecer").value;
+
+    if (!dataInicioStr || !dataParecerStr) {
+        if (warningDiv) warningDiv.classList.add("hidden");
+        if (resumoBox) resumoBox.classList.add("hidden");
+        return;
+    }
+
+    const dtInicio = new Date(dataInicioStr + "T00:00:00");
+    const dtParecer = new Date(dataParecerStr + "T00:00:00");
+    const diffMs = dtInicio - dtParecer;
+    const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+    if (resumoBox && resumoDot && resumoTexto) {
+        resumoBox.classList.remove("hidden");
+        resumoDot.className = "tempestividade-dot";
+
+        if (diffDias >= 60 && diffDias <= 70) {
+            resumoDot.classList.add("tempestivo");
+            resumoTexto.textContent = `Tempestividade Conforme: ${diffDias} dias de antecedência (dentro da janela regimental de 60 a 70 dias).`;
+            if (warningDiv) warningDiv.classList.add("hidden");
+        } else if (diffDias < 60) {
+            resumoDot.classList.add("intempestivo");
+            resumoTexto.textContent = `Alerta de Tempestividade: ${diffDias} dias de antecedência (abaixo do prazo regimental de 60 dias).`;
+            if (warningDiv) {
+                warningDiv.className = "warning-alert warning-amber";
+                document.getElementById("tempestividade-warning-title").textContent = "Encaminhamento com Menos de 60 Dias";
+                document.getElementById("tempestividade-warning-desc").textContent = `O processo apresenta ${diffDias} dias de antecedência em relação ao início pretendido da prorrogação (o regimento estipula entre 60 e 70 dias). Recomenda-se anexar justificativa circunstanciada para o prazo exíguo.`;
+                warningDiv.classList.remove("hidden");
+            }
+        } else {
+            resumoDot.classList.add("antecipado");
+            resumoTexto.textContent = `Antecedência Estendida: ${diffDias} dias de antecedência (superior a 70 dias).`;
+            if (warningDiv) {
+                warningDiv.className = "warning-alert info-alert";
+                document.getElementById("tempestividade-warning-title").textContent = "Encaminhamento com Mais de 70 Dias";
+                document.getElementById("tempestividade-warning-desc").textContent = `O processo apresenta ${diffDias} dias de antecedência em relação ao início da prorrogação.`;
+                warningDiv.classList.remove("hidden");
+            }
+        }
+    }
+}
+
+/* ==========================================================================
    PROCESSAMENTO E GERAÇÃO
    ========================================================================== */
 function processarConformidade() {
@@ -349,11 +486,18 @@ function processarConformidade() {
     const dataFimPretendida = document.getElementById("data-fim-pretendida").value;
     const dataParecer = document.getElementById("data-parecer").value;
 
+    const portariaOrigemNumero = document.getElementById("portaria-origem-numero")?.value.trim() || "";
+    const portariaOrigemData = document.getElementById("portaria-origem-data")?.value || "";
+
     // Validar se os novos campos estão preenchidos antes de processar
     if (!campusLotacao || !setorLotacao || !cargoServidor) {
         showToast("Por favor, preencha a Lotação, o Setor e o Cargo do servidor.");
         return;
     }
+
+    let modalidadeNome = "Afastamento Integral";
+    if (tipoProcesso === "prorrogacao") modalidadeNome = "Prorrogação de Afastamento Integral";
+    else if (tipoProcesso === "alocacao") modalidadeNome = "Alocação de Carga Horária";
 
     // Coleta pendências
     const itensDesmarcados = [];
@@ -381,11 +525,16 @@ function processarConformidade() {
         d += `Interessado(a): ${nomeServidor}\n`;
         d += `Cargo/Lotação: ${cargoServidor} - ${setorLotacao} / ${campusLotacao}\n`;
         d += `SIAPE: ${siape}\n`;
-        d += `Assunto: Análise documental de processo para ${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} (${nivelCurso})\n\n`;
+        d += `Assunto: Análise documental de processo para ${modalidadeNome} (${nivelCurso})\n\n`;
         d += `Ao(À) ${setorLotacao}\n`;
         d += `${campusLotacao} - IF Baiano\n\n`;
         d += `Prezados(as) Colegas,\n\n`;
-        d += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano realizou a análise da documentação acostada ao processo em epígrafe. Em atenção às diretrizes da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, constatou-se a necessidade de saneamento do feito devido à ausência ou inconformidade dos seguintes itens:\n\n`;
+
+        if (tipoProcesso === 'prorrogacao') {
+            d += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano realizou a análise da documentação acostada ao processo em epígrafe referente ao pedido de Prorrogação de Afastamento Integral${portariaOrigemNumero ? ' (concedido originariamente pela ' + portariaOrigemNumero + ')' : ''}. Em atenção às diretrizes da Resolução Consup nº 63/2020 e às instruções de prorrogação do IF Baiano, constatou-se a necessidade de saneamento do feito devido à ausência ou inconformidade dos seguintes itens:\n\n`;
+        } else {
+            d += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano realizou a análise da documentação acostada ao processo em epígrafe. Em atenção às diretrizes da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, constatou-se a necessidade de saneamento do feito devido à ausência ou inconformidade dos seguintes itens:\n\n`;
+        }
 
         itensDesmarcados.forEach((txt, i) => { d += `${i + 1}. [PENDÊNCIA] ${txt}\n`; });
 
@@ -425,9 +574,17 @@ function processarConformidade() {
         p += `Interessado(a): ${nomeServidor}\n`;
         p += `Cargo/Lotação: ${cargoServidor} - ${setorLotacao} / ${campusLotacao}\n`;
         p += `SIAPE: ${siape}\n`;
-        p += `Assunto: Solicitação de ${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} para cursar ${nivelCurso}\n\n`;
-        p += `A Comissão Interna de Supervisão da Carreira – CIS/PCCTAE do IF Baiano, designada pela PORTARIA 124/2026 - RET-GAB/RET/IFBAIANO, de 15 de abril de 2026, e suas alterações, ao analisar os documentos presentes no Processo nº ${numProcesso}, considerando as disposições da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, que tratam sobre as ações de desenvolvimento em serviço e afastamentos de servidores da carreira PCCTAE, manifesta-se favoravelmente pelo deferimento do pleito.\n\n`;
-        p += `O período deferido corresponde a ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}${retroTexto}.\n\n`;
+        p += `Assunto: Solicitação de ${modalidadeNome} para cursar ${nivelCurso}\n\n`;
+
+        if (tipoProcesso === 'prorrogacao') {
+            p += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano, designada pela PORTARIA 374/2026 - RET-GAB/RET/IFBAIANO, de 30 de julho de 2026, e suas alterações, ao analisar os documentos constantes no Processo nº ${numProcesso}, considerando as disposições da Resolução Consup nº 63/2020, manifesta-se favoravelmente pelo deferimento da prorrogação do afastamento integral${portariaOrigemNumero ? ', concedido originariamente por meio da ' + portariaOrigemNumero : ''}.\n\n`;
+            p += `Constatou-se a juntada tempestiva do requerimento próprio assinado pelo servidor e gestores, a declaração do orientador justificando a dilação de prazo com respectivo cronograma, o histórico escolar atualizado, bem como a declaração do NUCAP ou NAGP atestando a previsão da ação de desenvolvimento no Plano de Desenvolvimento de Pessoas (PDP) vigente do IF Baiano.\n\n`;
+            p += `O período prorrogado deferido corresponde a ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}${retroTexto}, respeitando o limite temporal máximo acumulado estabelecido no Artigo 4º da Resolução Consup nº 63/2020.\n\n`;
+        } else {
+            p += `A Comissão Interna de Supervisão da Carreira (CIS/PCCTAE) do IF Baiano, designada pela PORTARIA 374/2026 - RET-GAB/RET/IFBAIANO, de 30 de julho de 2026, e suas alterações, ao analisar os documentos presentes no Processo nº ${numProcesso}, considerando as disposições da Resolução Consup nº 63/2020 e da Instrução Normativa nº 34/2020, que tratam sobre as ações de desenvolvimento em serviço e afastamentos de servidores da carreira PCCTAE, manifesta-se favoravelmente pelo deferimento do pleito.\n\n`;
+            p += `O período deferido corresponde a ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}${retroTexto}.\n\n`;
+        }
+
         p += `À vista do exposto, encaminha-se o processo ao Gabinete da Reitora do IF Baiano para homologação, emissão da respectiva portaria autorizativa e demais providências cabíveis.\n\n`;
         p += `[Cidade - BA], ${formatarDataPorExtenso(dataParecer)}.\n\n`;
         p += `(Assinado eletronicamente)\n\n`;
@@ -437,11 +594,13 @@ function processarConformidade() {
 
         // PORTARIA
         let port = `MINUTA DE PORTARIA Nº ______ / ${new Date(dataParecer + "T00:00:00").getFullYear()} - RET-GAB/RET/IFBAIANO, DE ${formatarDataDiaMes(dataParecer)} DE ${new Date(dataParecer + "T00:00:00").getFullYear()}\n\n`;
-        port += `A REITORA DO INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO, no uso das suas atribuições delegadas pelo Decreto de 20/05/2026, publicado no DOU de 21/05/2026, Seção 2, página 1, e de acordo com as disposições contidas na Lei nº 8.112, de 11/12/1990 e na Lei nº 11.892, de 29/12/2008, e considerando o constante no Processo nº ${numProcesso} e no Parecer da CIS/PCCTAE,\n\n`;
+        port += `A REITORA DO INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA BAIANO, no uso das suas atribuições delegadas pelo Decreto de 20/05/2026, publicado no DOU de 21/05/2026, Seção 2, página 1, e de acordo com as disposições contidas na Lei nº 8.112, de 11/12/1990 e na Lei nº 11.892, de 29/12/2008, e considerando o constante no Processo nº ${numProcesso}, bem como a manifestação favorável da Comissão Interna de Supervisão da Carreira (CIS/PCCTAE), designada pela PORTARIA 374/2026 - RET-GAB/RET/IFBAIANO, de 30 de julho de 2026, e suas alterações,\n\n`;
         port += `RESOLVE:\n\n`;
 
         if (tipoProcesso === 'afastamento') {
             port += `Art. 1º Conceder afastamento integral ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de ${cargoServidor}, matrícula SIAPE nº ${siape}, lotado(a) no(a) ${campusLotacao} do Instituto Federal de Educação, Ciência e Tecnologia Baiano, para participar de Programa de Pós-Graduação Stricto Sensu em nível de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
+        } else if (tipoProcesso === 'prorrogacao') {
+            port += `Art. 1º Prorrogar o afastamento integral concedido ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de ${cargoServidor}, matrícula SIAPE nº ${siape}, lotado(a) no(a) ${campusLotacao} do Instituto Federal de Educação, Ciência e Tecnologia Baiano, objeto da ${portariaOrigemNumero ? portariaOrigemNumero : 'Portaria originária'}${portariaOrigemData ? ' de ' + formatarData(portariaOrigemData) : ''}, para continuar participando de Programa de Pós-Graduação Stricto Sensu em nível de ${nivelCurso}, no período complementar de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
         } else {
             port += `Art. 1º Autorizar a alocação de carga horária semanal para fins de participação em ação de desenvolvimento em serviço ao(à) servidor(a) ${nomeServidor.toUpperCase()}, ocupante do cargo efetivo de ${cargoServidor}, matrícula SIAPE nº ${siape}, lotado(a) no(a) ${campusLotacao} do Instituto Federal de Educação, Ciência e Tecnologia Baiano, para frequentar curso de ${nivelCurso}, no período de ${formatarData(dataInicioReal)} a ${formatarData(dataFimPretendida)}.\n\n`;
         }
@@ -471,7 +630,8 @@ function processarConformidade() {
                         <tr><td style="padding: 4px 0; font-weight: bold;">Interessado(a):</td><td style="padding: 4px 0;">${nomeServidor}</td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold;">Cargo/Lotação:</td><td style="padding: 4px 0;">${cargoServidor} - ${setorLotacao} / ${campusLotacao}</td></tr>
                         <tr><td style="padding: 4px 0; font-weight: bold;">SIAPE:</td><td style="padding: 4px 0;">${siape}</td></tr>
-                        <tr><td style="padding: 4px 0; font-weight: bold;">Assunto:</td><td style="padding: 4px 0;">${tipoProcesso === 'afastamento' ? 'Afastamento Integral' : 'Alocação de Carga Horária'} (${nivelCurso})</td></tr>
+                        <tr><td style="padding: 4px 0; font-weight: bold;">Assunto:</td><td style="padding: 4px 0;">${modalidadeNome} (${nivelCurso})</td></tr>
+                        ${tipoProcesso === 'prorrogacao' && portariaOrigemNumero ? `<tr><td style="padding: 4px 0; font-weight: bold;">Portaria Originária:</td><td style="padding: 4px 0;">${portariaOrigemNumero} ${portariaOrigemData ? '(' + formatarData(portariaOrigemData) + ')' : ''}</td></tr>` : ''}
                         <tr><td style="padding: 4px 0; font-weight: bold;">Data da Análise:</td><td style="padding: 4px 0;">${formatarData(dataParecer)}</td></tr>
                     </table>
                 </div>
@@ -642,19 +802,80 @@ function initSidebar() {
 }
 
 /* ==========================================================================
-   CÓPIA PARA CLIPBOARD
+   VISUALIZADOR DE DOCUMENTOS COM SUPORTE A TERMOS EM NEGRITO
+   ========================================================================== */
+function initDocumentoViewer() {
+    const docEl = document.getElementById("text-documento");
+    if (docEl && docEl.tagName.toLowerCase() !== "textarea") {
+        Object.defineProperty(docEl, "value", {
+            get() {
+                return this._rawText !== undefined ? this._rawText : this.innerText;
+            },
+            set(val) {
+                this._rawText = val || "";
+                if (!val) {
+                    this.innerHTML = "";
+                    return;
+                }
+                const escaped = val
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/\[PENDÊNCIA\]/g, '<strong class="tag-pendencia">[PENDÊNCIA]</strong>')
+                    .replace(/\[PENDENCIA\]/g, '<strong class="tag-pendencia">[PENDÊNCIA]</strong>');
+                this.innerHTML = escaped;
+            },
+            configurable: true
+        });
+    }
+}
+
+/* ==========================================================================
+   CÓPIA PARA CLIPBOARD COM SUPORTE A RICH TEXT (HTML) E TEXTO PURO
    ========================================================================== */
 function setupCopyButtons() {
     const setup = (btnId, textId) => {
-        document.getElementById(btnId).addEventListener("click", () => {
-            const text = document.getElementById(textId).value;
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+        btn.addEventListener("click", () => {
+            const el = document.getElementById(textId);
+            if (!el) return;
+            const text = el.value || el.innerText || "";
             if (!text || text.startsWith("Não foi possível")) return;
 
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("Texto copiado para a área de transferência!");
-            }).catch(() => {
-                showToast("Erro ao copiar. Selecione o texto manualmente.");
-            });
+            // Formatação HTML para manter o termo em negrito no SUAP, Word e Google Docs
+            const htmlFormatted = text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\[PENDÊNCIA\]/g, "<strong>[PENDÊNCIA]</strong>")
+                .replace(/\[PENDENCIA\]/g, "<strong>[PENDÊNCIA]</strong>")
+                .replace(/\n/g, "<br>");
+
+            if (navigator.clipboard && window.ClipboardItem) {
+                const blobText = new Blob([text], { type: "text/plain;charset=utf-8" });
+                const blobHtml = new Blob([htmlFormatted], { type: "text/html;charset=utf-8" });
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        "text/plain": blobText,
+                        "text/html": blobHtml
+                    })
+                ]).then(() => {
+                    showToast("Texto copiado com formatação em negrito para a área de transferência.");
+                }).catch(() => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showToast("Texto copiado para a área de transferência.");
+                    }).catch(() => {
+                        showToast("Erro ao copiar. Selecione o texto manualmente.");
+                    });
+                });
+            } else {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Texto copiado para a área de transferência.");
+                }).catch(() => {
+                    showToast("Erro ao copiar. Selecione o texto manualmente.");
+                });
+            }
         });
     };
     setup("copy-documento", "text-documento");
